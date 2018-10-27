@@ -6,13 +6,13 @@ import java.net.URISyntaxException;
 import org.apache.http.client.utils.URIBuilder;
 
 import iot.zjt.jclient.annotation.ApiUrl;
-import iot.zjt.jclient.information.KismetInformation;
+import iot.zjt.jclient.information.KismetInfo;
 
 public class UriGenerator {
 
     public static final URI buildUri(
         String host, int port,
-        Class<? extends KismetInformation> infoType, Long timestamp) {
+        Class<? extends KismetInfo> infoType, Long timestamp) {
 
         String path = null;
         URI uri = null;
@@ -34,7 +34,7 @@ public class UriGenerator {
 
     public static final URI buildUri(
         String host, int port,
-        Class<? extends KismetInformation> infoType) {
+        Class<? extends KismetInfo> infoType) {
 
         return buildUri(host, port, infoType, null);
     }
