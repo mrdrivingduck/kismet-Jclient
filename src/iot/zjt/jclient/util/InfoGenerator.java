@@ -8,6 +8,12 @@ import com.alibaba.fastjson.JSONObject;
 import iot.zjt.jclient.annotation.FieldAliase;
 import iot.zjt.jclient.information.KismetInfo;
 
+/**
+ * @version 2018.10.27
+ * @author Mr Dk.
+ * Generate different types of information form JSON object
+ */
+
 public class InfoGenerator {
 
     public static final KismetInfo generateInfo(JSONObject json, Class<? extends KismetInfo> clazz) {

@@ -5,6 +5,11 @@ import iot.zjt.jclient.annotation.FieldAliase;
 import iot.zjt.jclient.annotation.FieldPath;
 import iot.zjt.jclient.annotation.InfoType;
 
+/**
+ * @version 2018.10.27
+ * @author Mr Dk.
+ */
+
 @InfoType("TIMESTAMP")
 @ApiUrl("/system/timestamp.json")
 public class TimestampInfo extends KismetInfo {

@@ -8,6 +8,12 @@ import org.apache.http.client.utils.URIBuilder;
 import iot.zjt.jclient.annotation.ApiUrl;
 import iot.zjt.jclient.information.KismetInfo;
 
+/**
+ * @version 2018.10.27
+ * @author Mr Dk.
+ * Generate URI for Http GET or POST request
+ */
+
 public class UriGenerator {
 
     public static final URI buildUri(
