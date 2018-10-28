@@ -8,8 +8,9 @@ import java.util.Set;
 import com.alibaba.fastjson.JSON;
 
 import iot.zjt.jclient.information.KismetInfo;
+import iot.zjt.jclient.information.TimestampInfo;
 import iot.zjt.jclient.util.HttpRequestGenerator;
-import iot.zjt.jclient.util.InfoGenerator;
+import iot.zjt.jclient.util.InfoBuilder;
 import iot.zjt.jclient.util.UriGenerator;
 
 /**
@@ -79,39 +80,56 @@ public class JClientConnector {
         	
         	@Override
         	public void run() {
+                long timestamp = 0;
 
                 while (running) {
-
-                    for (Class<? extends KismetInfo> clazz : allSubscriptions) {
         
-                        String json = HttpRequestGenerator.doGet(
-                            UriGenerator.buildUri(
-                                host, port, clazz
-                            )
-                        );
-                        
-                        for (JClientListener listener : allListeners) {
-                            if (listener.getSubscription().contains(clazz)) {
-                                listener.OnInformation(InfoGenerator.generateInfo(JSON.parseObject(json), clazz));
-                            }
-                        }
-                    }
+                    String json = HttpRequestGenerator.doGet(
+                        UriGenerator.buildUri(host, port, TimestampInfo.class)
+                    );
+                    timestamp = ((TimestampInfo) publishSubscription(json, TimestampInfo.class)).getSec();
+
+
+
+
 
                     try {
                         sleep(3000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    
                 }
                 
-                for (JClientListener listeners : allListeners) {
-                    listeners.OnTerminate("Connector killed");
-                }
+                publishTerminate();
         	}
         	
         }.start();
 
+    }
+
+    /**
+     * Publish information to all subscribed listeners
+     * @param originInfo
+     * @param clazz
+     */
+    private KismetInfo publishSubscription(String originInfo, Class<? extends KismetInfo> clazz) {
+        for (JClientListener listener : allListeners) {
+            if (listener.getSubscription().contains(clazz)) {
+                listener.OnInformation(
+                    InfoBuilder.buildInfo(
+                        JSON.parseObject(originInfo), clazz));
+            }
+        }
+        return InfoBuilder.buildInfo(JSON.parseObject(originInfo), clazz);
+    }
+
+    /**
+     * Pushlish terminate info to all listeners
+     */
+    private void publishTerminate() {
+        for (JClientListener listener : allListeners) {
+            listener.OnTerminate("Connector killed");
+        }
     }
 
     /**

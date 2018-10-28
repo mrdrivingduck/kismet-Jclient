@@ -14,9 +14,9 @@ import iot.zjt.jclient.information.KismetInfo;
  * Generate different types of information form JSON object
  */
 
-public class InfoGenerator {
+public class InfoBuilder {
 
-    public static final KismetInfo generateInfo(JSONObject json, Class<? extends KismetInfo> clazz) {
+    public static final KismetInfo buildInfo(JSONObject json, Class<? extends KismetInfo> clazz) {
         KismetInfo info = null;
 
         try {
