@@ -6,9 +6,9 @@ import java.util.Set;
 import iot.zjt.jclient.information.KismetInfo;
 
 /**
+ * A listener which can subscribe and listen several type of KismetInfo
  * @version 2018.10.28
  * @author Mr Dk.
- * A listener which can subscribe and listen several type of KismetInfo
  */
 
 public abstract class JClientListener {
@@ -22,8 +22,8 @@ public abstract class JClientListener {
     }
 
     /**
-     * Be able to call JClientConnector's function
-     * To update the subscriptions of JClientConnector
+     * Be able to call JClientConnector's function,
+     * to update the subscriptions of JClientConnector
      * @param conn
      * @throws IllegalArgumentException
      */
@@ -39,8 +39,8 @@ public abstract class JClientListener {
     }
 
     /**
-     * Subscribe a KismetInfo type if not subscribing
-     * Update the Connector's subscriptions if registed to a Connector
+     * Subscribe a KismetInfo type if not subscribing,
+     * update the Connector's subscriptions if registed to a Connector
      * @param clazz
      */
     public void subscribe(Class<? extends KismetInfo> clazz) {
@@ -53,8 +53,8 @@ public abstract class JClientListener {
     }
 
     /**
-     * Unsubscribe a KismetInfo type if subscribing
-     * Update the Connector's subscriptions if registed to a Connector
+     * Unsubscribe a KismetInfo type if subscribing,
+     * update the Connector's subscriptions if registed to a Connector
      * @param clazz
      */
     public void unsubscribe(Class<? extends KismetInfo> clazz) {
@@ -67,10 +67,15 @@ public abstract class JClientListener {
     }
 
     /**
-     * Called when a KismetInfo is built
-     * Need to be OVERRIDE
+     * Called when a KismetInfo is built,
+     * needed to be OVERRIDE
      * @param info
      */
     public abstract void OnInformation(KismetInfo info);
+
+    /**
+     * Called when working thread is killed
+     * @param reason
+     */
     public abstract void OnTerminate(String reason);
 }

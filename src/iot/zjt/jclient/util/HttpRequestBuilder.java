@@ -17,9 +17,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 /**
+ * Generate Http GET or POST request
  * @version 2018.10.28
  * @author Mr Dk.
- * Generate Http GET or POST request
  */
 
 public class HttpRequestBuilder {

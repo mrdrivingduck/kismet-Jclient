@@ -1,24 +1,22 @@
 package iot.zjt.jclient;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-
 import iot.zjt.jclient.information.KismetInfo;
+import iot.zjt.jclient.information.MessageInfo;
 import iot.zjt.jclient.information.TimestampInfo;
 import iot.zjt.jclient.util.HttpRequestBuilder;
 import iot.zjt.jclient.util.InfoBuilder;
 import iot.zjt.jclient.util.UriGenerator;
 
 /**
+ * The core connector of JClient
  * @version 2018.10.28
  * @author Mr Dk.
- * The core connector of JClient
  */
 
 public class JClientConnector {
@@ -32,11 +30,11 @@ public class JClientConnector {
     private Set<Class<? extends KismetInfo>> allSubscriptions;
 
     /**
-     * To register a listener on this connection
-     * Updated the subscriptions of this connection
+     * To register a listener on this connection,
+     * updated the subscriptions of this connection
      * @param listener
      */
-    public void register(JClientListener listener) {
+    public synchronized void register(JClientListener listener) {
         if (!allListeners.contains(listener)) {
             allListeners.add(listener);
             updateSubscriptions();
@@ -44,11 +42,11 @@ public class JClientConnector {
     }
 
     /**
-     * To unregister a listener on this connection
-     * Updated the subscriptions of this connection
+     * To unregister a listener on this connection,
+     * updated the subscriptions of this connection
      * @param listener
      */
-    public void unregister(JClientListener listener) {
+    public synchronized void unregister(JClientListener listener) {
         if (allListeners.contains(listener)) {
             allListeners.remove(listener);
             updateSubscriptions();
@@ -66,8 +64,8 @@ public class JClientConnector {
     }
 
     /**
-     * Consturctor
-     * Generate a working thread
+     * Consturctor,
+     * generating a working thread
      * @param host
      * @param port
      */
@@ -82,21 +80,16 @@ public class JClientConnector {
         	
         	@Override
         	public void run() {
-                long timestamp = 0;
-                String res = null;
+
+                long timestamp = 0L;
 
                 while (running) {
+
+                    if (allSubscriptions.contains(MessageInfo.class)) {
+                        generateMessageInfo(timestamp);
+                    }
         
-                    res = HttpRequestBuilder.doGet(
-                        UriGenerator.buildUri(host, port, TimestampInfo.class)
-                    );
-                    timestamp = 
-                        ((TimestampInfo) publishInfo(JSON.parseObject(res), TimestampInfo.class))
-                        .getSec();
-
-
-
-
+                    timestamp = generateTimestampInfo();
 
                     try {
                         sleep(3000);
@@ -105,46 +98,37 @@ public class JClientConnector {
                     }
                 }
                 
-                publishTerminate();
+                InfoBuilder.buildTerminateInfo(allListeners);
+
+                try {
+                    HttpRequestBuilder.getHttpClient().close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         	}
-        	
         }.start();
-
     }
 
     /**
-     * Publish information to all subscribed listeners
-     * @param jsonObj
-     * @param clazz
+     * To generate a MessageInfo
+     * @param timestamp
      */
-    private KismetInfo publishInfo(JSONObject obj, Class<? extends KismetInfo> clazz) {
-        for (JClientListener listener : allListeners) {
-            if (listener.getSubscription().contains(clazz)) {
-                listener.OnInformation(
-                    InfoBuilder.buildInfo(obj, clazz));
-            }
-        }
-        return InfoBuilder.buildInfo(obj, clazz);
+    private void generateMessageInfo(long timestamp) {
+        String res = HttpRequestBuilder.doGet(
+            UriGenerator.buildUri(host, port, MessageInfo.class, timestamp)
+        );
+        InfoBuilder.publishMessageInfo(res, allListeners, timestamp);
     }
 
     /**
-     * Publish information from an info array
-     * @param arr
-     * @param clazz
+     * To generate a TimestampInfo
+     * @return The timestamp of Kismet server
      */
-    private void publishInfo(JSONArray arr, Class<? extends KismetInfo> clazz) {
-        for (int i = 0;i < arr.size(); i++) {
-            publishInfo(arr.getJSONObject(i), clazz);
-        }
-    }
-
-    /**
-     * Pushlish terminate info to all listeners
-     */
-    private void publishTerminate() {
-        for (JClientListener listener : allListeners) {
-            listener.OnTerminate("Connector killed");
-        }
+    private long generateTimestampInfo() {
+        String res = HttpRequestBuilder.doGet(
+            UriGenerator.buildUri(host, port, TimestampInfo.class)
+        );
+        return InfoBuilder.publishTimestampInfo(res, allListeners);
     }
 
     /**

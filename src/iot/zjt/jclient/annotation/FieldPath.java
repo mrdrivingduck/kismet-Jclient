@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * The URL path of each field
  * @version 2018.10.27
  * @author Mr Dk.
- * The URL path of each field
  */
 
 @Target(ElementType.METHOD)

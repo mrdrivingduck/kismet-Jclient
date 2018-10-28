@@ -1,6 +1,7 @@
 package iot.zjt.jclient;
 
 import iot.zjt.jclient.information.KismetInfo;
+import iot.zjt.jclient.information.MessageInfo;
 import iot.zjt.jclient.information.TimestampInfo;
 
 public class Test {
@@ -22,7 +23,8 @@ public class Test {
 			}
 		};
 
-		listener.subscribe(TimestampInfo.class);
+		// listener.subscribe(TimestampInfo.class);
+		// listener.subscribe(MessageInfo.class);
 		conn.register(listener);
 	}
 

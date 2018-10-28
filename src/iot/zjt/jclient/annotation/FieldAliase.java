@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * The aliase of fields
  * @version 2018.10.28
  * @author Mr Dk.
- * The aliase of fields
  */
 
 @Target(ElementType.METHOD)
