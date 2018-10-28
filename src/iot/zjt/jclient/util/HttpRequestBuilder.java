@@ -22,11 +22,11 @@ import org.apache.http.util.EntityUtils;
  * Generate Http GET or POST request
  */
 
-public class HttpRequestGenerator {
+public class HttpRequestBuilder {
 
     private static final CloseableHttpClient httpClient = HttpClients.createDefault();
 
-    private HttpRequestGenerator() {
+    private HttpRequestBuilder() {
 
     }
 

@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import iot.zjt.jclient.information.KismetInfo;
 import iot.zjt.jclient.information.TimestampInfo;
-import iot.zjt.jclient.util.HttpRequestGenerator;
+import iot.zjt.jclient.util.HttpRequestBuilder;
 import iot.zjt.jclient.util.InfoBuilder;
 import iot.zjt.jclient.util.UriGenerator;
 
@@ -81,13 +83,16 @@ public class JClientConnector {
         	@Override
         	public void run() {
                 long timestamp = 0;
+                String res = null;
 
                 while (running) {
         
-                    String json = HttpRequestGenerator.doGet(
+                    res = HttpRequestBuilder.doGet(
                         UriGenerator.buildUri(host, port, TimestampInfo.class)
                     );
-                    timestamp = ((TimestampInfo) publishSubscription(json, TimestampInfo.class)).getSec();
+                    timestamp = 
+                        ((TimestampInfo) publishInfo(JSON.parseObject(res), TimestampInfo.class))
+                        .getSec();
 
 
 
@@ -109,18 +114,28 @@ public class JClientConnector {
 
     /**
      * Publish information to all subscribed listeners
-     * @param originInfo
+     * @param jsonObj
      * @param clazz
      */
-    private KismetInfo publishSubscription(String originInfo, Class<? extends KismetInfo> clazz) {
+    private KismetInfo publishInfo(JSONObject obj, Class<? extends KismetInfo> clazz) {
         for (JClientListener listener : allListeners) {
             if (listener.getSubscription().contains(clazz)) {
                 listener.OnInformation(
-                    InfoBuilder.buildInfo(
-                        JSON.parseObject(originInfo), clazz));
+                    InfoBuilder.buildInfo(obj, clazz));
             }
         }
-        return InfoBuilder.buildInfo(JSON.parseObject(originInfo), clazz);
+        return InfoBuilder.buildInfo(obj, clazz);
+    }
+
+    /**
+     * Publish information from an info array
+     * @param arr
+     * @param clazz
+     */
+    private void publishInfo(JSONArray arr, Class<? extends KismetInfo> clazz) {
+        for (int i = 0;i < arr.size(); i++) {
+            publishInfo(arr.getJSONObject(i), clazz);
+        }
     }
 
     /**
