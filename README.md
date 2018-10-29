@@ -36,7 +36,8 @@ public class Main {
     
     public static void main(String[] args) {
         JClientConnector conn = new JClientConnector("localhost", 2501);
-        JClientListener listener = new JClientListener(){
+        JClientListener listener = new JClientListener() {
+            
             @Override
             public void onTerminate(String reason) {
                 System.out.println(reason);
