@@ -34,27 +34,27 @@ All dependency _JAR_ files can be found in the directory `/lib`
 ```java
 public class Main {
     
-	public static void main(String[] args) {
-		JClientConnector conn = new JClientConnector("localhost", 2501);
-		JClientListener listener = new JClientListener(){
-			@Override
-			public void onTerminate(String reason) {
-				System.out.println(reason);
-			}
-		
-			@Override
-			public void onInformation(KismetInfo info) {
-				System.out.println(info);
-			}
-		};
+    public static void main(String[] args) {
+        JClientConnector conn = new JClientConnector("localhost", 2501);
+        JClientListener listener = new JClientListener(){
+            @Override
+            public void onTerminate(String reason) {
+                System.out.println(reason);
+            }
         
-		listener.subscribe(TimestampInfo.class);
-		listener.subscribe(MessageInfo.class);
-		listener.subscribe(WiFiAPInfo.class);
-		conn.register(listener);
+            @Override
+            public void onInformation(KismetInfo info) {
+                System.out.println(info);
+            }
+        };
+        
+        listener.subscribe(TimestampInfo.class);
+        listener.subscribe(MessageInfo.class);
+        listener.subscribe(WiFiAPInfo.class);
+        conn.register(listener);
         
         // conn.kill();
-	}
+    }
     
 }
 ```
