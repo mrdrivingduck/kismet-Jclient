@@ -71,11 +71,11 @@ public abstract class JClientListener {
      * needed to be OVERRIDE
      * @param info
      */
-    public abstract void OnInformation(KismetInfo info);
+    public abstract void onInformation(KismetInfo info);
 
     /**
      * Called when working thread is killed
      * @param reason
      */
-    public abstract void OnTerminate(String reason);
+    public abstract void onTerminate(String reason);
 }
