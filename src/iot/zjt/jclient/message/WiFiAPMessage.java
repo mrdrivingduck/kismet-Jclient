@@ -1,13 +1,18 @@
-package iot.zjt.jclient.information;
+package iot.zjt.jclient.message;
 
 import iot.zjt.jclient.annotation.ApiUrl;
 import iot.zjt.jclient.annotation.FieldAliase;
 import iot.zjt.jclient.annotation.FieldPath;
-import iot.zjt.jclient.annotation.InfoType;
+import iot.zjt.jclient.annotation.MessageType;
 
-@InfoType("WIFIAP")
+/**
+ * @version 2018.10.30
+ * @author Mr Dk.
+ */
+
+@MessageType("WIFIAP")
 @ApiUrl("/devices/last-time/%d/devices.json")
-public class WiFiAPInfo extends KismetInfo {
+public class WiFiAPMessage extends KismetMessage {
 
     private String macAddr;
     private String deviceKey;

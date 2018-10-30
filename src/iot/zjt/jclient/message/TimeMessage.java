@@ -1,18 +1,18 @@
-package iot.zjt.jclient.information;
+package iot.zjt.jclient.message;
 
 import iot.zjt.jclient.annotation.ApiUrl;
 import iot.zjt.jclient.annotation.FieldAliase;
 import iot.zjt.jclient.annotation.FieldPath;
-import iot.zjt.jclient.annotation.InfoType;
+import iot.zjt.jclient.annotation.MessageType;
 
 /**
- * @version 2018.10.27
+ * @version 2018.10.30
  * @author Mr Dk.
  */
 
-@InfoType("TIMESTAMP")
+@MessageType("TIMESTAMP")
 @ApiUrl("/system/timestamp.json")
-public class TimestampInfo extends KismetInfo {
+public class TimeMessage extends KismetMessage {
 
     private long sec;
     private long usec;

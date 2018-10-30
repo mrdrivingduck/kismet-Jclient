@@ -10,7 +10,13 @@ import com.alibaba.fastjson.JSONObject;
 
 import iot.zjt.jclient.annotation.FieldAliase;
 import iot.zjt.jclient.annotation.FieldPath;
-import iot.zjt.jclient.information.KismetInfo;
+import iot.zjt.jclient.message.KismetMessage;
+
+/**
+ * Generate a JSON parameter to filter fields from Kismet Server
+ * @version 2018.10.29
+ * @author Mr Dk.
+ */
 
 public class JsonParamBuilder {
 
@@ -22,7 +28,11 @@ public class JsonParamBuilder {
         this.allRegex = new ArrayList<>();
     }
 
-    public void addFields(Class<? extends KismetInfo> clazz) {
+    /**
+     * Add fields that a message needs through annotation
+     * @param clazz
+     */
+    public void addFields(Class<? extends KismetMessage> clazz) {
         for (Method method : clazz.getMethods()) {
             FieldPath path = method.getAnnotation(FieldPath.class);
             FieldAliase aliase = method.getAnnotation(FieldAliase.class);
@@ -35,6 +45,11 @@ public class JsonParamBuilder {
         }
     }
 
+    /**
+     * Add conditions to filter messages
+     * @param path
+     * @param regex
+     */
     public void addRegex(String path, String regex) {
         List<String> pair = new ArrayList<>();
         pair.add(path);
@@ -42,6 +57,10 @@ public class JsonParamBuilder {
         allRegex.add(pair);
     }
 
+    /**
+     * Build the JSON parameter string from lists
+     * @return The Generated JSON string
+     */
     public String build() {
         Map<String, Object> map = new HashMap<>();
         map.put("fields", allFields);

@@ -10,18 +10,18 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-import iot.zjt.jclient.information.KismetInfo;
-import iot.zjt.jclient.information.MessageInfo;
-import iot.zjt.jclient.information.TimestampInfo;
-import iot.zjt.jclient.information.WiFiAPInfo;
+import iot.zjt.jclient.message.KismetMessage;
+import iot.zjt.jclient.message.MsgMessage;
+import iot.zjt.jclient.message.TimeMessage;
+import iot.zjt.jclient.message.WiFiAPMessage;
 import iot.zjt.jclient.util.HttpRequestBuilder;
-import iot.zjt.jclient.util.InfoBuilder;
+import iot.zjt.jclient.util.MsgBuilder;
 import iot.zjt.jclient.util.JsonParamBuilder;
 import iot.zjt.jclient.util.UriGenerator;
 
 /**
  * The core connector of JClient
- * @version 2018.10.29
+ * @version 2018.10.30
  * @author Mr Dk.
  */
 
@@ -33,7 +33,7 @@ public class JClientConnector {
     private boolean running;
 
     private List<JClientListener> allListeners;
-    private Set<Class<? extends KismetInfo>> allSubscriptions;
+    private Set<Class<? extends KismetMessage>> allSubscriptions;
 
     /**
      * To register a listener on this connection,
@@ -91,15 +91,15 @@ public class JClientConnector {
 
                 while (running) {
 
-                    if (allSubscriptions.contains(MessageInfo.class)) {
-                        generateMessageInfo(timestamp);
+                    if (allSubscriptions.contains(MsgMessage.class)) {
+                        generateMsgMessage(timestamp);
                     }
 
-                    if (allSubscriptions.contains(WiFiAPInfo.class)) {
-                        generateWiFiAPInfo(timestamp);
+                    if (allSubscriptions.contains(WiFiAPMessage.class)) {
+                        generateWiFiAPMessage(timestamp);
                     }
         
-                    timestamp = generateTimestampInfo();
+                    timestamp = generateTimeMessage();
 
                     try {
                         sleep(3000);
@@ -108,7 +108,7 @@ public class JClientConnector {
                     }
                 }
                 
-                generateTerminateInfo();
+                generateTerminateMessage();
 
                 try {
                     HttpRequestBuilder.getHttpClient().close();
@@ -119,79 +119,79 @@ public class JClientConnector {
         }.start();
     }
 
-    private void generateWiFiAPInfo(long timestamp) {
+    private void generateWiFiAPMessage(long timestamp) {
         JsonParamBuilder paramBuilder = new JsonParamBuilder();
-        paramBuilder.addFields(WiFiAPInfo.class);
+        paramBuilder.addFields(WiFiAPMessage.class);
         paramBuilder.addRegex("kismet.device.base.phyname", "^IEEE802.11$");
         paramBuilder.addRegex("kismet.device.base.type", "^WiFi AP$");
         String param = paramBuilder.build();
 
         String res = HttpRequestBuilder.doPost(
-            UriGenerator.buildUri(host, port, WiFiAPInfo.class, timestamp), param
+            UriGenerator.buildUri(host, port, WiFiAPMessage.class, timestamp), param
         );
         
         JSONArray wifiApArray = JSON.parseArray(res);
-        publishInfo(wifiApArray, WiFiAPInfo.class);
+        publishMsg(wifiApArray, WiFiAPMessage.class);
     }
 
     /**
-     * To generate a MessageInfo
+     * To generate a MsgMessage
      * @param timestamp
      */
-    private void generateMessageInfo(long timestamp) {
+    private void generateMsgMessage(long timestamp) {
         String res = HttpRequestBuilder.doGet(
-            UriGenerator.buildUri(host, port, MessageInfo.class, timestamp)
+            UriGenerator.buildUri(host, port, MsgMessage.class, timestamp)
         );
         JSONObject msgList = JSON.parseObject(res);
         JSONArray msgArray = msgList.getJSONArray("kismet.messagebus.list");
-        publishInfo(msgArray, MessageInfo.class);
+        publishMsg(msgArray, MsgMessage.class);
     }
 
     /**
-     * To generate a TimestampInfo
+     * To generate a TimeMessage
      * @return The timestamp of Kismet server
      */
-    private long generateTimestampInfo() {
+    private long generateTimeMessage() {
         String res = HttpRequestBuilder.doGet(
-            UriGenerator.buildUri(host, port, TimestampInfo.class)
+            UriGenerator.buildUri(host, port, TimeMessage.class)
         );
         JSONObject timestampObj = JSON.parseObject(res);
-        KismetInfo info = publishInfo(timestampObj, TimestampInfo.class);
-        return ((TimestampInfo) info).getSec();
+        KismetMessage msg = publishMsg(timestampObj, TimeMessage.class);
+        return ((TimeMessage) msg).getSec();
     }
 
     /**
-     * Build and publish a KismetInfo to all subscribed listeners
+     * Build and publish a KismetMessage to all subscribed listeners
      * @param obj
      * @param clazz
-     * @return A built KismetInfo
+     * @return A built KismetMessage
      */
-    private KismetInfo publishInfo(JSONObject obj, Class<? extends KismetInfo> clazz) {
+    private KismetMessage publishMsg(JSONObject obj, Class<? extends KismetMessage> clazz) {
         synchronized(allListeners) {
             for (JClientListener listener : allListeners) {
                 if (listener.getSubscription().contains(clazz)) {
-                    listener.onInformation(InfoBuilder.buildInfo(obj, clazz));
+                    listener.onMessage(MsgBuilder.buildMessage(obj, clazz));
                 }
             }
         }
-        return InfoBuilder.buildInfo(obj, clazz);
+        return MsgBuilder.buildMessage(obj, clazz);
     }
 
     /**
-     * Build and publish an array of KismetInfo(s) to all subscribed listeners
+     * Build and publish an array of KismetMessage(s) to all subscribed listeners
      * @param arr
      * @param clazz
      */
-    private void publishInfo(JSONArray arr, Class<? extends KismetInfo> clazz) {
+    private void publishMsg(JSONArray arr, Class<? extends KismetMessage> clazz) {
         for (int i = 0; i < arr.size(); i++) {
-            publishInfo(arr.getJSONObject(i), clazz);
+            publishMsg(arr.getJSONObject(i), clazz);
         }
     }
 
     /**
-     * Generate a terminate information to all listeners
+     * Generate a terminate message to all listeners
      */
-    private void generateTerminateInfo() {
+    private void generateTerminateMessage() {
         synchronized(allListeners) {
             for (JClientListener listener : allListeners) {
                 listener.onTerminate("Connector killed");

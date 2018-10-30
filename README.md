@@ -27,8 +27,8 @@ All dependency _JAR_ files can be found in the directory `/lib`
 ### Usage
 
 1. Instantiation a `JClientConnector` with `host` & `port` on which _Kismet httpd service_ is running
-2. Instantiation a `JClientListener` and override methods `onInformation` & `onTerminate`
-3. Subscribe specific _information types_ for `JClientListener`
+2. Instantiation a `JClientListener` and override methods `onMessage` & `onTerminate`
+3. Subscribe specific _message types_ for `JClientListener`
 4. Register the `JClientListener` onto the `JClientConnector`
 
 ```java
@@ -44,14 +44,14 @@ public class Main {
             }
         
             @Override
-            public void onInformation(KismetInfo info) {
-                System.out.println(info);
+            public void onMessage(KismetMessage msg) {
+                System.out.println(msg);
             }
         };
         
-        listener.subscribe(TimestampInfo.class);
-        listener.subscribe(MessageInfo.class);
-        listener.subscribe(WiFiAPInfo.class);
+        listener.subscribe(TimeMessage.class);
+        listener.subscribe(MsgMessage.class);
+        listener.subscribe(WiFiAPMessage.class);
         conn.register(listener);
         
         // conn.kill();
@@ -62,10 +62,10 @@ public class Main {
 
 ### Features
 
-* The subscription for different types of information can be customized by calling `listener.subscribe(XXX.class);`
-* The operation to different types of information can be customized by instantiate different `JclientListener` and override method `onInformation` & `onTerminate`
+* The subscription for different types of message can be customized by calling `listener.subscribe(XXX.class);`
+* The operation to different types of message can be customized by instantiate different `JclientListener` and override method `onMessage` & `onTerminate`
 * Can be integrated into another Java project easily
 
 ---
 
-Developing to support more types of _Information_
+Developing to support more types of _message_

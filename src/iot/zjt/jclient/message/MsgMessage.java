@@ -1,18 +1,18 @@
-package iot.zjt.jclient.information;
+package iot.zjt.jclient.message;
 
 import iot.zjt.jclient.annotation.ApiUrl;
 import iot.zjt.jclient.annotation.FieldAliase;
 import iot.zjt.jclient.annotation.FieldPath;
-import iot.zjt.jclient.annotation.InfoType;
+import iot.zjt.jclient.annotation.MessageType;
 
 /**
- * @version 2018.10.28
+ * @version 2018.10.30
  * @author Mr Dk.
  */
 
-@InfoType("MESSAGE")
+@MessageType("MESSAGE")
 @ApiUrl("/messagebus/last-time/%d/messages.json")
-public class MessageInfo extends KismetInfo {
+public class MsgMessage extends KismetMessage {
 
     private String content;
     private int flags;

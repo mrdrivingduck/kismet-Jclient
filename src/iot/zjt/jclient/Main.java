@@ -1,7 +1,9 @@
 package iot.zjt.jclient;
 
-import iot.zjt.jclient.information.KismetInfo;
-import iot.zjt.jclient.information.WiFiAPInfo;
+import iot.zjt.jclient.message.KismetMessage;
+import iot.zjt.jclient.message.MsgMessage;
+import iot.zjt.jclient.message.TimeMessage;
+import iot.zjt.jclient.message.WiFiAPMessage;
 
 public class Main {
 
@@ -17,14 +19,14 @@ public class Main {
 			}
 		
 			@Override
-			public void onInformation(KismetInfo info) {
-				System.out.println(info);
+			public void onMessage(KismetMessage msg) {
+				System.out.println(msg);
 			}
 		};
 
-		// listener.subscribe(TimestampInfo.class);
-		// listener.subscribe(MessageInfo.class);
-		listener.subscribe(WiFiAPInfo.class);
+		listener.subscribe(TimeMessage.class);
+		listener.subscribe(MsgMessage.class);
+		listener.subscribe(WiFiAPMessage.class);
 		conn.register(listener);
 	}
 

@@ -3,17 +3,17 @@ package iot.zjt.jclient;
 import java.util.HashSet;
 import java.util.Set;
 
-import iot.zjt.jclient.information.KismetInfo;
+import iot.zjt.jclient.message.KismetMessage;
 
 /**
- * A listener which can subscribe and listen several type of KismetInfo
- * @version 2018.10.28
+ * A listener which can subscribe and listen several type of KismetMessage
+ * @version 2018.10.30
  * @author Mr Dk.
  */
 
 public abstract class JClientListener {
 
-    private Set<Class<? extends KismetInfo>> subscription;
+    private Set<Class<? extends KismetMessage>> subscription;
     private JClientConnector conn;
 
     public JClientListener() {
@@ -34,16 +34,16 @@ public abstract class JClientListener {
         this.conn = conn;
     }
 
-    public Set<Class<? extends KismetInfo>> getSubscription() {
+    public Set<Class<? extends KismetMessage>> getSubscription() {
         return subscription;
     }
 
     /**
-     * Subscribe a KismetInfo type if not subscribing,
+     * Subscribe a KismetMessage type if not subscribing,
      * update the Connector's subscriptions if registed to a Connector
      * @param clazz
      */
-    public void subscribe(Class<? extends KismetInfo> clazz) {
+    public void subscribe(Class<? extends KismetMessage> clazz) {
         if (!subscription.contains(clazz)) {
             subscription.add(clazz);
             if (conn != null) {
@@ -53,11 +53,11 @@ public abstract class JClientListener {
     }
 
     /**
-     * Unsubscribe a KismetInfo type if subscribing,
+     * Unsubscribe a KismetMessage type if subscribing,
      * update the Connector's subscriptions if registed to a Connector
      * @param clazz
      */
-    public void unsubscribe(Class<? extends KismetInfo> clazz) {
+    public void unsubscribe(Class<? extends KismetMessage> clazz) {
         if (subscription.contains(clazz)) {
             subscription.remove(clazz);
             if (conn != null) {
@@ -67,11 +67,11 @@ public abstract class JClientListener {
     }
 
     /**
-     * Called when a KismetInfo is built,
+     * Called when a KismetMessage is built,
      * needed to be OVERRIDE
      * @param info
      */
-    public abstract void onInformation(KismetInfo info);
+    public abstract void onMessage(KismetMessage msg);
 
     /**
      * Called when working thread is killed
