@@ -50,6 +50,6 @@ public class MsgMessage extends KismetMessage {
 
     @Override
     public String toString() {
-        return "MessageInfo: {" + "time=" + time + ", content=\"" + content + "\", flags=" + flags + "}";
+        return "MsgMessage: {" + "time=" + time + ", content=\"" + content + "\", flags=" + flags + "}";
     }
 }

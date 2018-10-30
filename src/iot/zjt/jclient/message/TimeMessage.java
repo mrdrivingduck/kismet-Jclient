@@ -39,6 +39,6 @@ public class TimeMessage extends KismetMessage {
 
     @Override
     public String toString() {
-        return "TimestampInfo: {" + "sec=" + sec + ", usec=" + usec + "}";
+        return "TimeMessage: {" + "sec=" + sec + ", usec=" + usec + "}";
     }
 }

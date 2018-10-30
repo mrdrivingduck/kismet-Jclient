@@ -50,6 +50,6 @@ public class WiFiAPMessage extends KismetMessage {
 
     @Override
     public String toString() {
-        return "Wi-Fi AP Info: {" + "deviceName:" + deviceName + ", macAddr:" + macAddr + ", deviceKey:" + deviceKey + "}";
+        return "Wi-Fi AP Message: {" + "deviceName:" + deviceName + ", macAddr:" + macAddr + ", deviceKey:" + deviceKey + "}";
     }
 }
