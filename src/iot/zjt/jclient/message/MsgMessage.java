@@ -10,7 +10,7 @@ import iot.zjt.jclient.annotation.MessageType;
  * @author Mr Dk.
  */
 
-@MessageType("MESSAGE")
+@MessageType("MSG")
 @ApiUrl("/messagebus/last-time/%d/messages.json")
 public class MsgMessage extends KismetMessage {
 
