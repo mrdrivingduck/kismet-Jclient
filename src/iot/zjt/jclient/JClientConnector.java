@@ -10,13 +10,15 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import iot.zjt.jclient.message.AlertMessage;
+import iot.zjt.jclient.message.BSSIDMessage;
+import iot.zjt.jclient.message.ClientMessage;
 import iot.zjt.jclient.message.KismetMessage;
 import iot.zjt.jclient.message.MsgMessage;
 import iot.zjt.jclient.message.TimeMessage;
-import iot.zjt.jclient.message.WiFiAPMessage;
 import iot.zjt.jclient.util.HttpRequestBuilder;
-import iot.zjt.jclient.util.MsgBuilder;
 import iot.zjt.jclient.util.JsonParamBuilder;
+import iot.zjt.jclient.util.MsgBuilder;
 import iot.zjt.jclient.util.UriGenerator;
 
 /**
@@ -95,8 +97,16 @@ public class JClientConnector {
                         generateMsgMessage(timestamp);
                     }
 
-                    if (allSubscriptions.contains(WiFiAPMessage.class)) {
-                        generateWiFiAPMessage(timestamp);
+                    if (allSubscriptions.contains(BSSIDMessage.class)) {
+                        generateBSSIDMessage(timestamp);
+                    }
+
+                    if (allSubscriptions.contains(ClientMessage.class)) {
+                        generateClientMessage(timestamp);
+                    }
+
+                    if (allSubscriptions.contains(AlertMessage.class)) {
+                        generateAlertMessage(timestamp);
                     }
         
                     timestamp = generateTimeMessage();
@@ -119,19 +129,43 @@ public class JClientConnector {
         }.start();
     }
 
-    private void generateWiFiAPMessage(long timestamp) {
+    private void generateAlertMessage(long timestamp) {
+        String res = HttpRequestBuilder.doGet(
+            UriGenerator.buildUri(host, port, AlertMessage.class, timestamp)
+        );
+        JSONObject alertList = JSON.parseObject(res);
+        JSONArray alertArray = alertList.getJSONArray("kismet.alert.list");
+        publishMsg(alertArray, AlertMessage.class);
+    }
+
+    private void generateClientMessage(long timestamp) {
         JsonParamBuilder paramBuilder = new JsonParamBuilder();
-        paramBuilder.addFields(WiFiAPMessage.class);
+        paramBuilder.addFields(ClientMessage.class);
+        paramBuilder.addRegex("kismet.device.base.phyname", "^IEEE802.11$");
+        paramBuilder.addRegex("kismet.device.base.type", "^WiFi Client$");
+        String param = paramBuilder.build();
+
+        String res = HttpRequestBuilder.doPost(
+            UriGenerator.buildUri(host, port, ClientMessage.class, timestamp), param
+        );
+        
+        JSONArray clientArray = JSON.parseArray(res);
+        publishMsg(clientArray, ClientMessage.class);
+    }
+
+    private void generateBSSIDMessage(long timestamp) {
+        JsonParamBuilder paramBuilder = new JsonParamBuilder();
+        paramBuilder.addFields(BSSIDMessage.class);
         paramBuilder.addRegex("kismet.device.base.phyname", "^IEEE802.11$");
         paramBuilder.addRegex("kismet.device.base.type", "^WiFi AP$");
         String param = paramBuilder.build();
 
         String res = HttpRequestBuilder.doPost(
-            UriGenerator.buildUri(host, port, WiFiAPMessage.class, timestamp), param
+            UriGenerator.buildUri(host, port, BSSIDMessage.class, timestamp), param
         );
         
-        JSONArray wifiApArray = JSON.parseArray(res);
-        publishMsg(wifiApArray, WiFiAPMessage.class);
+        JSONArray apArray = JSON.parseArray(res);
+        publishMsg(apArray, BSSIDMessage.class);
     }
 
     /**

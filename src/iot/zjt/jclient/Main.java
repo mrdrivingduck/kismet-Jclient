@@ -1,9 +1,11 @@
 package iot.zjt.jclient;
 
+import iot.zjt.jclient.message.AlertMessage;
+import iot.zjt.jclient.message.BSSIDMessage;
+import iot.zjt.jclient.message.ClientMessage;
 import iot.zjt.jclient.message.KismetMessage;
 import iot.zjt.jclient.message.MsgMessage;
 import iot.zjt.jclient.message.TimeMessage;
-import iot.zjt.jclient.message.WiFiAPMessage;
 
 public class Main {
 
@@ -26,7 +28,9 @@ public class Main {
 
 		listener.subscribe(TimeMessage.class);
 		listener.subscribe(MsgMessage.class);
-		listener.subscribe(WiFiAPMessage.class);
+		listener.subscribe(BSSIDMessage.class);
+		listener.subscribe(ClientMessage.class);
+		listener.subscribe(AlertMessage.class);
 		conn.register(listener);
 	}
 

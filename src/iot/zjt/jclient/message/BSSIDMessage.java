@@ -130,6 +130,11 @@ public class BSSIDMessage extends KismetMessage {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
+    @Override
+    public String toString() {
+        return "BSSIDMessage: {" + "mac:" + mac + ", ssid:" + ssid + ", databytes:" + dataBytes + "}";
+    }
     
     public String getNickname() {
         return nickname;

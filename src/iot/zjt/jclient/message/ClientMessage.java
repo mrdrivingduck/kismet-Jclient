@@ -116,6 +116,11 @@ public class ClientMessage extends KismetMessage {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
+    @Override
+    public String toString() {
+        return "ClientMessage: {" + "bssid:" + bssid + ", signalDBM:" + signalDBM + "}";
+    }
     
     public String getNickname() {
         return nickname;
