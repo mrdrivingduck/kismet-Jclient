@@ -13,7 +13,7 @@ public class BSSIDMessage extends KismetMessage {
 
     private String mac;
     private String ssid;
-    private String channel;     // ?
+    private String channel;
     private int dataPackets;
     private int encryptedPackets;
     private int llcPackets;
@@ -28,6 +28,7 @@ public class BSSIDMessage extends KismetMessage {
     private int noiseDBMMax;
     private long dataBytes;
     private String nickname;
+    private String cryptType;
 
     @FieldPath("kismet.device.base.macaddr")
     @FieldAliase("kismet.device.base.macaddr")
@@ -131,9 +132,19 @@ public class BSSIDMessage extends KismetMessage {
         this.nickname = nickname;
     }
 
+    @FieldPath("kismet.device.base.crypt")
+    @FieldAliase("kismet.device.base.crypt")
+    public void setCryptType(String cryptType) {
+        this.cryptType = cryptType;
+    }
+
     @Override
     public String toString() {
         return "BSSIDMessage: {" + "mac:" + mac + ", ssid:" + ssid + ", databytes:" + dataBytes + "}";
+    }
+
+    public String getCryptType() {
+        return cryptType;
     }
     
     public String getNickname() {
