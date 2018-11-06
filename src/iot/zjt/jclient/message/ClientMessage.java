@@ -33,8 +33,8 @@ public class ClientMessage extends KismetMessage {
         this.mac = mac;
     }
 
-    @FieldPath("kismet.device.base.macaddr")
-    @FieldAliase("kismet.device.base.macaddr")
+    @FieldPath("dot11.device/dot11.device.last_bssid")
+    @FieldAliase("dot11.device.last_bssid")
     public void setBssid(String bssid) {
         this.bssid = bssid;
     }
@@ -119,7 +119,7 @@ public class ClientMessage extends KismetMessage {
 
     @Override
     public String toString() {
-        return "ClientMessage: {" + "bssid:" + bssid + ", signalDBM:" + signalDBM + "}";
+        return "ClientMessage: {" + "mac:" + mac + ", bssid:" + bssid + ", signalDBM:" + signalDBM + "}";
     }
     
     public String getNickname() {
