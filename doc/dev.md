@@ -41,7 +41,7 @@ public class BSSIDMessage extends KismetMessage {
 
 #### `@FieldPath` & `@FieldAliase`
 
-These two annotations should be added on the `setters` of your message fields. `@FieldPath` illustrates the path of the field you want to visit in _RESTful API_. `@FieldAliase` illustrates the aliases of your field. Normally, the value of `@FieldAliase` should be the same as `@FieldPath`; however, if you want to get a common field which exists __twice or more than twice__ in the result (This may happen when two fields have a same common child field), you must set different aliases for the common field. Or the common field will exist only once and you'll have no idea which parent field it belongs to. If you set different aliases, the common field will be returned in your aliases respectively.
+These two annotations should be added on the `setters` of your message fields. `@FieldPath` illustrates the path of the field you want to visit in _RESTful API_. `@FieldAliase` illustrates the aliases of your field. Normally, the value of `@FieldAliase` should be the same as `@FieldPath`; however, if you want to get a common field which will exist __twice or more than twice__ in the result (This may happen when two fields have a same common child field), you must set different aliases for the common field. Or the common field will be returned only once in the result and you'll have no idea which parent field it belongs to. If you set different aliases, the common field will be returned in aliases respectively.
 
 ```java
 @MessageType("BSSID")
@@ -64,7 +64,7 @@ public class BSSIDMessage extends KismetMessage {
 
 #### Implementation
 
-Once getting the `Class` object of your `xxxMessage.java`, we get `@ApiUrl` to build a _HTTP url_ together with `host` and `port`, and take all `@FieldPath` and regular expressions as the parameters of `HTTP POST` method. Then we send it to _Kismet server_.
+Once getting the `Class` object of your `xxxMessage.java`, we use `@ApiUrl` to build a _HTTP url_ with `host` and `port`, and take all `@FieldPath` and regular expressions as the parameters of `HTTP POST` method. Then we send it to _Kismet server_.
 
 Once getting _JSON_ data from _Kismet server_, we use _reflection_ to instantiate an `xxxMessage` object, taking all `@FieldAliase` as _JSON_ keys to get value from _JSON Object_ or _JSON Array_. Then, all `setters` will be automatically invoked and a message object is available and published to all listeners.
 
