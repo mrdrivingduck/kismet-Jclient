@@ -62,7 +62,7 @@ public class BSSIDMessage extends KismetMessage {
 }
 ```
 
-#### Implementation
+### Implementation
 
 Once getting the `Class` object of your `xxxMessage.java`, we use `@ApiUrl` to build a _HTTP url_ with `host` and `port`, and take all `@FieldPath` and regular expressions as the parameters of `HTTP POST` method. Then we send it to _Kismet server_.
 
