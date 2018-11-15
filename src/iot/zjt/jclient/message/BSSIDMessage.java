@@ -1,11 +1,16 @@
 package iot.zjt.jclient.message;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import iot.zjt.jclient.annotation.ApiUrl;
 import iot.zjt.jclient.annotation.FieldAliase;
 import iot.zjt.jclient.annotation.FieldPath;
 import iot.zjt.jclient.annotation.MessageType;
+import iot.zjt.jclient.util.CryptoMap;
 
 @MessageType("BSSID")
 @ApiUrl("/devices/last-time/%d/devices.json")
@@ -29,6 +34,41 @@ public class BSSIDMessage extends KismetMessage {
     private long dataBytes;
     private String nickname;
     private String cryptType;
+    private int checksum;
+
+    private String cryptToString(int crypt_val) {
+        if (crypt_val == 0) {
+            return CryptoMap.typeMap.get(0);
+        }
+        List<String> builder = new ArrayList<>();
+        for (int tester = 1 << 28; tester > 0; tester >>>= 1) {
+            if ((tester & crypt_val) > 0 &&
+                CryptoMap.typeMap.containsKey(tester)) {
+
+                builder.add(CryptoMap.typeMap.get(tester));
+            }
+        }
+        return builder.stream().collect(Collectors.joining("/"));
+    }
+    
+    @FieldPath("dot11.device/dot11.device.advertised_ssid_map")
+    @FieldAliase("dot11.device.advertised_ssid_map")
+    public void setCryptType(Map<String, Map<String, Object>> ssid_map) {
+        this.cryptType = "";
+        if (ssid_map.containsKey(String.valueOf(checksum))) {
+            Map<String, Object> inner_map = ssid_map.get(String.valueOf(checksum));
+            if (inner_map.containsKey("dot11.advertisedssid.crypt_set")) {
+                int crypt_val = (Integer) inner_map.get("dot11.advertisedssid.crypt_set");
+                this.cryptType = cryptToString(crypt_val);
+            }
+        }
+    }
+
+    @FieldPath("dot11.device/dot11.device.last_beaconed_ssid_checksum")
+    @FieldAliase("dot11.device.last_beaconed_ssid_checksum")
+    public void setChecksum(int checksum) {
+        this.checksum = checksum;
+    }
 
     @FieldPath("kismet.device.base.macaddr")
     @FieldAliase("kismet.device.base.macaddr")
@@ -132,15 +172,9 @@ public class BSSIDMessage extends KismetMessage {
         this.nickname = nickname;
     }
 
-    @FieldPath("kismet.device.base.crypt")
-    @FieldAliase("kismet.device.base.crypt")
-    public void setCryptType(String cryptType) {
-        this.cryptType = cryptType;
-    }
-
     @Override
     public String toString() {
-        return "BSSIDMessage: {" + "mac:" + mac + ", ssid:" + ssid + ", databytes:" + dataBytes + "}";
+        return "BSSIDMessage: {" + "mac:" + mac + ", ssid:" + ssid + ", cryptoType:" + cryptType + "}";
     }
 
     public String getCryptType() {
@@ -213,6 +247,10 @@ public class BSSIDMessage extends KismetMessage {
 
     public String getMac() {
         return mac;
+    }
+
+    public int getChecksum() {
+        return checksum;
     }
 
 }
