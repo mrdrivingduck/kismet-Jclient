@@ -17,7 +17,7 @@ The main purpose of this document is to guide you how to define your own types o
 
 We obtain information from _Kismet Server_ by Kismet's RESTful API. We must provide two important elements as parameters of our _HTTP_ request towards Kismet's RESTful API - __fields__ and __regular expressions__. - [WHY?](https://github.com/kismetwireless/kismet/blob/master/docs/dev/webui_rest.md)
 
-__Fields__ are used to filter the data in Kismet and get the only fields that you want to get, for example, the `SSID` of a wireless network. These fields should be defined in your `xxxMessage.java` as private fields with public `getters` & `setters`. [Click here to see all fields definition.](./Kismet Server - Tracked Fields.html)
+__Fields__ are used to filter the data in Kismet and get the only fields that you want to get, for example, the `SSID` of a wireless network. These fields should be defined in your `xxxMessage.java` as private fields with public `getters` & `setters`.
 
 __Regular expressions__ are used to filter the data with conditions. For example, if you want to get _Wi-Fi_ messages whose `SSID` starts with "xxx", then you should give a regular expression to express the names start with "xxx" to the `SSID` field you want to filter.
 
