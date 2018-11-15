@@ -34,7 +34,7 @@ public class BSSIDMessage extends KismetMessage {
     private long dataBytes;
     private String nickname;
     private String cryptType;
-    private int checksum;
+    private long checksum;
 
     private String cryptToString(int crypt_val) {
         if (crypt_val == 0) {
@@ -58,7 +58,7 @@ public class BSSIDMessage extends KismetMessage {
         if (ssid_map.containsKey(String.valueOf(checksum))) {
             Map<String, Object> inner_map = ssid_map.get(String.valueOf(checksum));
             if (inner_map.containsKey("dot11.advertisedssid.crypt_set")) {
-                int crypt_val = (Integer) inner_map.get("dot11.advertisedssid.crypt_set");
+                int crypt_val = (int) inner_map.get("dot11.advertisedssid.crypt_set");
                 this.cryptType = cryptToString(crypt_val);
             }
         }
@@ -66,7 +66,7 @@ public class BSSIDMessage extends KismetMessage {
 
     @FieldPath("dot11.device/dot11.device.last_beaconed_ssid_checksum")
     @FieldAliase("dot11.device.last_beaconed_ssid_checksum")
-    public void setChecksum(int checksum) {
+    public void setChecksum(long checksum) {
         this.checksum = checksum;
     }
 
@@ -249,7 +249,7 @@ public class BSSIDMessage extends KismetMessage {
         return mac;
     }
 
-    public int getChecksum() {
+    public long getChecksum() {
         return checksum;
     }
 
