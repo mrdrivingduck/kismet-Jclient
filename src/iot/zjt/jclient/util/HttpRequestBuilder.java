@@ -34,64 +34,40 @@ public class HttpRequestBuilder {
         return httpClient;
     }
 
-    public static final String doGet(URI uri) {
+    public static final String doGet(URI uri) throws IOException {
         CloseableHttpResponse response = null;
         String res = null;
         HttpGet httpGet = new HttpGet(uri);
         httpGet.setConfig(timeoutConfig());
         
-        try {
-            response = httpClient.execute(httpGet);
-            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                res = EntityUtils.toString(response.getEntity(), "utf-8");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (response != null) {
-                try {
-                    response.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        response = httpClient.execute(httpGet);
+        if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+            res = EntityUtils.toString(response.getEntity(), "utf-8");
         }
+        response.close();
 
         return res;
     }
 
-    public static final String doPost(URI uri, String jsonParam) {
+    public static final String doPost(URI uri, String jsonParam) throws IOException {
         String res = null;
         CloseableHttpResponse response = null;
         List<BasicNameValuePair> paramPairs = new ArrayList<>();
         paramPairs.add(new BasicNameValuePair("json", jsonParam));
 
-        try {
-            HttpPost httpPost = new HttpPost(uri);
-            UrlEncodedFormEntity postEntity = new UrlEncodedFormEntity(paramPairs);
-            postEntity.setContentType("application/x-www-form-urlencoded");
-            postEntity.setContentEncoding("utf-8");
-            httpPost.setEntity(postEntity);
-            httpPost.setConfig(timeoutConfig());
+        HttpPost httpPost = new HttpPost(uri);
+        UrlEncodedFormEntity postEntity = new UrlEncodedFormEntity(paramPairs);
+        postEntity.setContentType("application/x-www-form-urlencoded");
+        postEntity.setContentEncoding("utf-8");
+        httpPost.setEntity(postEntity);
+        httpPost.setConfig(timeoutConfig());
 
-            response = httpClient.execute(httpPost);
-            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                res = EntityUtils.toString(response.getEntity(), "utf-8");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (response != null) {
-                    response.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        response = httpClient.execute(httpPost);
+        if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+            res = EntityUtils.toString(response.getEntity(), "utf-8");
         }
-        
+        response.close();
+
         return res;
     }
 

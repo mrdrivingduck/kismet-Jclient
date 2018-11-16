@@ -94,22 +94,43 @@ public class JClientConnector {
                 while (running) {
 
                     if (allSubscriptions.contains(MsgMessage.class)) {
-                        generateMsgMessage(timestamp);
+                        try {
+                            generateMsgMessage(timestamp);
+                        } catch (IOException e) {
+                            printStackTrace();
+                        }
+                        
                     }
 
                     if (allSubscriptions.contains(BSSIDMessage.class)) {
-                        generateBSSIDMessage(timestamp);
+                        try {
+                            generateBSSIDMessage(timestamp);
+                        } catch (IOException e) {
+                            printStackTrace();
+                        }
                     }
 
                     if (allSubscriptions.contains(ClientMessage.class)) {
-                        generateClientMessage(timestamp);
+                        try {
+                            generateClientMessage(timestamp);
+                        } catch (IOException e) {
+                            printStackTrace();
+                        }
                     }
 
                     if (allSubscriptions.contains(AlertMessage.class)) {
-                        generateAlertMessage(timestamp);
+                        try {
+                            generateAlertMessage(timestamp);
+                        } catch (IOException e) {
+                            printStackTrace();    
+                        }
                     }
         
-                    timestamp = generateTimeMessage();
+                    try {
+                        timestamp = generateTimeMessage();
+                    } catch (IOException e) {
+                        printStackTrace();
+                    }
 
                     try {
                         sleep(3000);
@@ -129,7 +150,12 @@ public class JClientConnector {
         }.start();
     }
 
-    private void generateAlertMessage(long timestamp) {
+    private void printStackTrace() {
+        System.err.println("[ERROR] JClientConnector: Connection refused by - " + this.host + ":" + this.port);
+        System.err.println("    Make sure kismet server is running at - " + this.host + ":" + this.port);
+    }
+
+    private void generateAlertMessage(long timestamp) throws IOException {
         String res = HttpRequestBuilder.doGet(
             UriGenerator.buildUri(host, port, AlertMessage.class, timestamp)
         );
@@ -138,7 +164,7 @@ public class JClientConnector {
         publishMsg(alertArray, AlertMessage.class);
     }
 
-    private void generateClientMessage(long timestamp) {
+    private void generateClientMessage(long timestamp) throws IOException {
         JsonParamBuilder paramBuilder = new JsonParamBuilder();
         paramBuilder.addFields(ClientMessage.class);
         paramBuilder.addRegex("kismet.device.base.phyname", "^IEEE802.11$");
@@ -153,7 +179,7 @@ public class JClientConnector {
         publishMsg(clientArray, ClientMessage.class);
     }
 
-    private void generateBSSIDMessage(long timestamp) {
+    private void generateBSSIDMessage(long timestamp) throws IOException {
         JsonParamBuilder paramBuilder = new JsonParamBuilder();
         paramBuilder.addFields(BSSIDMessage.class);
         paramBuilder.addRegex("kismet.device.base.phyname", "^IEEE802.11$");
@@ -172,7 +198,7 @@ public class JClientConnector {
      * To generate a MsgMessage
      * @param timestamp
      */
-    private void generateMsgMessage(long timestamp) {
+    private void generateMsgMessage(long timestamp) throws IOException {
         String res = HttpRequestBuilder.doGet(
             UriGenerator.buildUri(host, port, MsgMessage.class, timestamp)
         );
@@ -185,7 +211,7 @@ public class JClientConnector {
      * To generate a TimeMessage
      * @return The timestamp of Kismet server
      */
-    private long generateTimeMessage() {
+    private long generateTimeMessage() throws IOException {
         String res = HttpRequestBuilder.doGet(
             UriGenerator.buildUri(host, port, TimeMessage.class)
         );
