@@ -18,7 +18,7 @@ import org.apache.http.util.EntityUtils;
 
 /**
  * Generate Http GET or POST request
- * @version 2018.10.28
+ * @version 2018.11.16
  * @author Mr Dk.
  */
 

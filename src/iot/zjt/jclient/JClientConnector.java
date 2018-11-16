@@ -23,7 +23,7 @@ import iot.zjt.jclient.util.UriGenerator;
 
 /**
  * The core connector of JClient
- * @version 2018.10.30
+ * @version 2018.11.16
  * @author Mr Dk.
  */
 
@@ -150,11 +150,19 @@ public class JClientConnector {
         }.start();
     }
 
+    /**
+     * To print connection failure message
+     */
     private void printStackTrace() {
         System.err.println("[ERROR] JClientConnector: Connection refused by - " + this.host + ":" + this.port);
         System.err.println("    Make sure kismet server is running at - " + this.host + ":" + this.port);
     }
 
+    /**
+     * To generate an alert message
+     * @param timestamp
+     * @throws IOException
+     */
     private void generateAlertMessage(long timestamp) throws IOException {
         String res = HttpRequestBuilder.doGet(
             UriGenerator.buildUri(host, port, AlertMessage.class, timestamp)
@@ -164,6 +172,11 @@ public class JClientConnector {
         publishMsg(alertArray, AlertMessage.class);
     }
 
+    /**
+     * To generate a Wi-Fi client message
+     * @param timestamp
+     * @throws IOException
+     */
     private void generateClientMessage(long timestamp) throws IOException {
         JsonParamBuilder paramBuilder = new JsonParamBuilder();
         paramBuilder.addFields(ClientMessage.class);
@@ -179,6 +192,11 @@ public class JClientConnector {
         publishMsg(clientArray, ClientMessage.class);
     }
 
+    /**
+     * To generate a Wi-Fi AP Message
+     * @param timestamp
+     * @throws IOException
+     */
     private void generateBSSIDMessage(long timestamp) throws IOException {
         JsonParamBuilder paramBuilder = new JsonParamBuilder();
         paramBuilder.addFields(BSSIDMessage.class);
@@ -195,8 +213,9 @@ public class JClientConnector {
     }
 
     /**
-     * To generate a MsgMessage
+     * To generate a system message
      * @param timestamp
+     * @throws IOException
      */
     private void generateMsgMessage(long timestamp) throws IOException {
         String res = HttpRequestBuilder.doGet(
@@ -208,8 +227,9 @@ public class JClientConnector {
     }
 
     /**
-     * To generate a TimeMessage
-     * @return The timestamp of Kismet server
+     * To generate a timestamp message
+     * @return
+     * @throws IOException
      */
     private long generateTimeMessage() throws IOException {
         String res = HttpRequestBuilder.doGet(
