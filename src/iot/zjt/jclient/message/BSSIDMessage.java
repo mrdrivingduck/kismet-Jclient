@@ -64,6 +64,10 @@ public class BSSIDMessage extends KismetMessage {
         }
     }
 
+    public void setCryptType(String cryptType) {
+        this.cryptType = cryptType;
+    }
+
     @FieldPath("dot11.device/dot11.device.last_beaconed_ssid_checksum")
     @FieldAliase("dot11.device.last_beaconed_ssid_checksum")
     public void setChecksum(long checksum) {
