@@ -1,0 +1,252 @@
+[
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 54:C5:7A:13:46:4C packet 109935",
+        "kismet.messagebus.message_time": 1540532376
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device E4:5A:A2:55:CE:EC packet 110400",
+        "kismet.messagebus.message_time": 1540532378
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 6A:22:66:89:C9:F7 packet 110410",
+        "kismet.messagebus.message_time": 1540532378
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 34:CE:00:9C:76:2B packet 110412",
+        "kismet.messagebus.message_time": 1540532378
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 06:3A:66:0E:B4:8B packet 110704",
+        "kismet.messagebus.message_time": 1540532379
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 80:A5:89:24:7D:41 packet 112294",
+        "kismet.messagebus.message_time": 1540532382
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device EC:F3:42:B0:4E:07 packet 112435",
+        "kismet.messagebus.message_time": 1540532383
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 24:1B:7A:32:36:54 packet 112568",
+        "kismet.messagebus.message_time": 1540532383
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 64:A2:F9:6B:BA:FD packet 113102",
+        "kismet.messagebus.message_time": 1540532386
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device DA:B7:63:6F:04:4D packet 113121",
+        "kismet.messagebus.message_time": 1540532386
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 6C:72:E7:F1:90:F3 packet 113393",
+        "kismet.messagebus.message_time": 1540532388
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 8C:85:90:9B:C0:41 packet 113433",
+        "kismet.messagebus.message_time": 1540532388
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "802.11 Wi-Fi device 48:7D:2E:6B:3B:62 advertising SSID 'Rjruffian'",
+        "kismet.messagebus.message_time": 1540532388
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device B8:37:65:70:C7:41 packet 113555",
+        "kismet.messagebus.message_time": 1540532389
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device CA:02:77:05:77:C4 packet 114169",
+        "kismet.messagebus.message_time": 1540532392
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 80:AD:16:7B:13:66 packet 114829",
+        "kismet.messagebus.message_time": 1540532396
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device A4:44:D1:58:5C:2B packet 115148",
+        "kismet.messagebus.message_time": 1540532398
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 76:36:1F:06:55:10 packet 115217",
+        "kismet.messagebus.message_time": 1540532398
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 74:81:14:19:89:F9 packet 115552",
+        "kismet.messagebus.message_time": 1540532399
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device A4:E9:75:61:1C:F8 packet 116227",
+        "kismet.messagebus.message_time": 1540532401
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 98:FE:94:AA:EA:CE packet 116561",
+        "kismet.messagebus.message_time": 1540532402
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 34:E6:AD:86:3B:39 packet 116805",
+        "kismet.messagebus.message_time": 1540532403
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 0C:70:4A:E0:7D:D7 packet 117578",
+        "kismet.messagebus.message_time": 1540532406
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device DC:72:9B:6F:A6:2E packet 117578",
+        "kismet.messagebus.message_time": 1540532406
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 84:A1:34:14:5C:20 packet 117877",
+        "kismet.messagebus.message_time": 1540532407
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 08:4A:CF:9A:A5:49 packet 117947",
+        "kismet.messagebus.message_time": 1540532407
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device D0:C5:D3:02:D7:37 packet 118118",
+        "kismet.messagebus.message_time": 1540532408
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 20:3C:AE:35:0F:5D packet 118678",
+        "kismet.messagebus.message_time": 1540532410
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 40:C6:2A:8C:F3:40 packet 120168",
+        "kismet.messagebus.message_time": 1540532415
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 10:F0:05:94:BC:BD packet 120608",
+        "kismet.messagebus.message_time": 1540532417
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 78:62:56:76:39:F1 packet 121539",
+        "kismet.messagebus.message_time": 1540532420
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 7C:6B:9C:07:CE:53 packet 122304",
+        "kismet.messagebus.message_time": 1540532423
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 4C:C0:0A:D1:3B:3F packet 122475",
+        "kismet.messagebus.message_time": 1540532424
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 94:87:E0:20:9D:5C packet 122711",
+        "kismet.messagebus.message_time": 1540532425
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device A0:56:F3:CD:ED:DD packet 123042",
+        "kismet.messagebus.message_time": 1540532426
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 78:36:CC:9B:14:B7 packet 123267",
+        "kismet.messagebus.message_time": 1540532428
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 6C:25:B9:B9:7B:38 packet 123795",
+        "kismet.messagebus.message_time": 1540532430
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device D4:1A:3F:C3:25:7F packet 124232",
+        "kismet.messagebus.message_time": 1540532431
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 3C:B6:B7:CA:7C:D7 packet 125502",
+        "kismet.messagebus.message_time": 1540532438
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 14:20:5E:A0:B7:42 packet 126335",
+        "kismet.messagebus.message_time": 1540532442
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device C8:F7:33:B5:F1:03 packet 127552",
+        "kismet.messagebus.message_time": 1540532446
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 14:5F:94:A3:74:81 packet 128033",
+        "kismet.messagebus.message_time": 1540532448
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device E8:B2:AC:5E:17:89 packet 128496",
+        "kismet.messagebus.message_time": 1540532450
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device D4:1A:3F:74:96:7D packet 128561",
+        "kismet.messagebus.message_time": 1540532450
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 10:1C:0C:06:27:F2 packet 128906",
+        "kismet.messagebus.message_time": 1540532451
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 2C:61:F6:9B:73:B2 packet 129189",
+        "kismet.messagebus.message_time": 1540532453
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 20:3C:AE:59:93:B4 packet 130016",
+        "kismet.messagebus.message_time": 1540532455
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device F0:18:98:11:DB:8A packet 130204",
+        "kismet.messagebus.message_time": 1540532455
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device B4:CB:57:47:EC:F5 packet 130532",
+        "kismet.messagebus.message_time": 1540532457
+    },
+    {
+        "kismet.messagebus.message_flags": 2,
+        "kismet.messagebus.message_string": "Detected new 802.11 Wi-Fi device 18:4F:32:0F:C9:A5 packet 130647",
+        "kismet.messagebus.message_time": 1540532457
+    }
+]
