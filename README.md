@@ -19,8 +19,8 @@ A Java client to get information from _Kismet Server_ by Kismet's _REST API_
 ### Dependency
 
 * `HttpClient 4.5` - A part of _Apache HttpComponents&trade;_ - [link](http://hc.apache.org/)
-
 * `fastjson` - A fast JSON parser/generator for Java - [link](https://github.com/alibaba/fastjson/wiki)
+* `Commons-csv` - A CSV parser of _Apache Commons CSV&trade;_
 
 All dependency _JAR_ files can be found in the directory `/lib`
 

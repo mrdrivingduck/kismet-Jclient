@@ -11,6 +11,7 @@ import iot.zjt.jclient.annotation.FieldAliase;
 import iot.zjt.jclient.annotation.FieldPath;
 import iot.zjt.jclient.annotation.MessageType;
 import iot.zjt.jclient.util.CryptoMap;
+import iot.zjt.jclient.util.VendorUtil;
 
 @MessageType("BSSID")
 @ApiUrl("/devices/last-time/%d/devices.json")
@@ -110,10 +111,10 @@ public class BSSIDMessage extends KismetMessage {
         this.llcPackets = llcPackets;
     }
     
-    @FieldPath("kismet.device.base.manuf")
-    @FieldAliase("kismet.device.base.manuf")
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
+    @FieldPath("kismet.device.base.macaddr")
+    @FieldAliase("kismet.device.base.macaddr")
+    public void setManufacturer(String mac) {
+        this.manufacturer = VendorUtil.getInstance().getOrganization(mac);
     }
 
     @FieldPath("kismet.device.base.first_time")
@@ -178,7 +179,7 @@ public class BSSIDMessage extends KismetMessage {
 
     @Override
     public String toString() {
-        return "BSSIDMessage: {" + "mac:" + mac + ", ssid:" + ssid + ", cryptoType:" + cryptType + "}";
+        return "BSSIDMessage: {" + "mac:" + mac + ", ssid:" + ssid + ", manufactor:" + manufacturer + "}";
     }
 
     public String getCryptType() {

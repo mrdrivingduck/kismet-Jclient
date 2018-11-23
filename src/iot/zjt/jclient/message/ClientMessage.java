@@ -6,6 +6,7 @@ import iot.zjt.jclient.annotation.ApiUrl;
 import iot.zjt.jclient.annotation.FieldAliase;
 import iot.zjt.jclient.annotation.FieldPath;
 import iot.zjt.jclient.annotation.MessageType;
+import iot.zjt.jclient.util.VendorUtil;
 
 @MessageType("CLIENT")
 @ApiUrl("/devices/last-time/%d/devices.json")
@@ -26,6 +27,13 @@ public class ClientMessage extends KismetMessage {
     private int dataPackets;
     private int encryptedPackets;
     private long dataSize;
+    private String manufactor;
+
+    @FieldPath("kismet.device.base.macaddr")
+    @FieldAliase("kismet.device.base.macaddr")
+    public void setManufactor(String mac) {
+        this.manufactor = VendorUtil.getInstance().getOrganization(mac);
+    }
 
     @FieldPath("kismet.device.base.macaddr")
     @FieldAliase("kismet.device.base.macaddr")
@@ -119,7 +127,11 @@ public class ClientMessage extends KismetMessage {
 
     @Override
     public String toString() {
-        return "ClientMessage: {" + "mac:" + mac + ", bssid:" + bssid + ", signalDBM:" + signalDBM + "}";
+        return "ClientMessage: {" + "mac:" + mac + ", bssid:" + bssid + ", manufactor:" + manufactor + "}";
+    }
+
+    public String getManufactor() {
+        return manufactor;
     }
     
     public String getNickname() {
