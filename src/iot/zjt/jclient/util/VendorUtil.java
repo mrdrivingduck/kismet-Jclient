@@ -21,7 +21,7 @@ public class VendorUtil {
     private static final VendorUtil instance = new VendorUtil();
     private Map<String, String> vendorMap = new HashMap<>(26000);
 
-    private final String OUI_PATH = "oui/oui.csv";
+    private final String OUI_PATH = "data/oui.csv";
     private final int INDEX_MAC = 1;
     private final int INDEX_ORG = 2;
 
