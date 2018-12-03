@@ -64,7 +64,7 @@ public class AlertMessage extends KismetMessage {
     
     @Override
     public String toString() {
-        return "AlertMessage: {" + "header:\"" + header + "\", text:\"" + text + "\"}";
+        return "AlertMessage: {" + "header:\"" + header + ", source:" + source + ", dest:" + destination + ", transmitter:" + bssid +  "\", text:\"" + text + "\"}";
     }
 
     public String getChannel() {
