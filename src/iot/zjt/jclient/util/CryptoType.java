@@ -26,7 +26,8 @@ public enum CryptoType {
     crypt_unknown_nonwep		(1 << 25),
     crypt_wps 					(1 << 26),
     crypt_version_wpa   (1 << 27),
-    crypt_version_wpa2  (1 << 28);
+    crypt_version_wpa2  (1 << 28),
+    crypt_protectmask   (0xFFFFF);
 
     private int crypt_val;
 

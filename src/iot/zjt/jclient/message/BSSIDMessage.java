@@ -1,16 +1,13 @@
 package iot.zjt.jclient.message;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import iot.zjt.jclient.annotation.ApiUrl;
 import iot.zjt.jclient.annotation.FieldAliase;
 import iot.zjt.jclient.annotation.FieldPath;
 import iot.zjt.jclient.annotation.MessageType;
-import iot.zjt.jclient.util.CryptoMap;
+import iot.zjt.jclient.util.CryptoType;
 import iot.zjt.jclient.util.VendorUtil;
 
 @MessageType("BSSID")
@@ -37,20 +34,152 @@ public class BSSIDMessage extends KismetMessage {
     private String cryptType;
     private long checksum;
 
-    private String cryptToString(int crypt_val) {
-        if (crypt_val == 0) {
-            return CryptoMap.typeMap.get(0);
+    private void addDeliminator(StringBuilder strBuilder, char del) {
+        if (strBuilder.length() > 0) {
+            strBuilder.append(del);
         }
-        List<String> builder = new ArrayList<>();
-        for (int tester = 1 << 28; tester > 0; tester >>>= 1) {
-            if ((tester & crypt_val) > 0 &&
-                CryptoMap.typeMap.containsKey(tester)) {
-
-                builder.add(CryptoMap.typeMap.get(tester));
-            }
-        }
-        return builder.stream().collect(Collectors.joining("/"));
     }
+
+    private String cryptToString(int crypt_val) {
+        StringBuilder strBuilder = new StringBuilder();
+        
+        if (crypt_val == CryptoType.crypt_none.value()) {
+            return new String("None");
+        }
+
+        if (crypt_val == CryptoType.crypt_unknown.value()) {
+            return new String("Unknown");
+        }
+
+        if ((crypt_val & CryptoType.crypt_wps.value()) != 0) {
+            strBuilder.append("WPS");
+        }
+
+        if ((crypt_val & CryptoType.crypt_protectmask.value()) == CryptoType.crypt_wep.value()) {
+            addDeliminator(strBuilder, '/');
+            return strBuilder.append("WEP").toString();
+        }
+
+        if ((crypt_val & CryptoType.crypt_version_wpa2.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("WPA2");
+        } else if ((crypt_val & CryptoType.crypt_version_wpa.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("WPA");
+        }
+
+        if ((crypt_val & CryptoType.crypt_psk.value()) != 0) {
+            addDeliminator(strBuilder, '-');
+            strBuilder.append("PSK");
+        }
+
+        if ((crypt_val & CryptoType.crypt_eap.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("EAP");
+        }
+
+        if ((crypt_val & CryptoType.crypt_peap.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("WPA-PEAP");
+        }
+
+        if ((crypt_val & CryptoType.crypt_leap.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("WPA-LEAP");
+        }
+
+        if ((crypt_val & CryptoType.crypt_ttls.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("WPA-TTLS");
+        }
+
+        if ((crypt_val & CryptoType.crypt_tls.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("WPA-TLS");
+        }
+
+        if ((crypt_val & CryptoType.crypt_wpa_migmode.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("WPA-MIGRATION");
+        }
+
+        if ((crypt_val & CryptoType.crypt_wep40.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("WEP40");
+        }
+
+        if ((crypt_val & CryptoType.crypt_wep104.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("WEP104");
+        }
+
+        if ((crypt_val & CryptoType.crypt_tkip.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("TKIP");
+        }
+
+        if ((crypt_val & CryptoType.crypt_aes_ocb.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append(("AES-OCB"));
+        }
+
+        if ((crypt_val & CryptoType.crypt_aes_ccm.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("AES-CCMP");
+        }
+
+        if ((crypt_val & CryptoType.crypt_layer3.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("Layer 3");
+        }
+
+        if ((crypt_val & CryptoType.crypt_isakmp.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("ISA KMP");
+        }
+
+        if ((crypt_val & CryptoType.crypt_pptp.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("PPTP");
+        }
+
+        if ((crypt_val & CryptoType.crypt_fortress.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("Fortress");
+        }
+
+        if ((crypt_val & CryptoType.crypt_keyguard.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("Keyguard");
+        }
+
+        if ((crypt_val & CryptoType.crypt_unknown_protected.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("L3/Unknown");
+        }
+
+        if ((crypt_val & CryptoType.crypt_unknown_nonwep.value()) != 0) {
+            addDeliminator(strBuilder, '/');
+            strBuilder.append("Non-WEP/Unknown");
+        }
+
+        return strBuilder.toString();
+    }
+
+    // private String cryptToString(int crypt_val) {
+    //     if (crypt_val == 0) {
+    //         return CryptoMap.typeMap.get(0);
+    //     }
+    //     List<String> builder = new ArrayList<>();
+    //     for (int tester = 1 << 28; tester > 0; tester >>>= 1) {
+    //         if ((tester & crypt_val) > 0 &&
+    //             CryptoMap.typeMap.containsKey(tester)) {
+
+    //             builder.add(CryptoMap.typeMap.get(tester));
+    //         }
+    //     }
+    //     return builder.stream().collect(Collectors.joining("/"));
+    // }
     
     @FieldPath("dot11.device/dot11.device.advertised_ssid_map")
     @FieldAliase("dot11.device.advertised_ssid_map")
@@ -179,7 +308,7 @@ public class BSSIDMessage extends KismetMessage {
 
     @Override
     public String toString() {
-        return "BSSIDMessage: {" + "mac:" + mac + ", ssid:" + ssid + ", manufactor:" + manufacturer + "}";
+        return "BSSIDMessage: {" + "mac:" + mac + ", ssid:" + ssid + ", crypt:" + cryptType + "}";
     }
 
     public String getCryptType() {

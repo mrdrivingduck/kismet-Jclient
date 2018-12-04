@@ -11,7 +11,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		JClientConnector conn = new JClientConnector("192.168.25.130", 2501);
+		JClientConnector conn = new JClientConnector("192.168.25.129", 2501);
 
 		JClientListener listener = new JClientListener(){
 		
