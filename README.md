@@ -1,7 +1,7 @@
 # kismet-Jclient
-A Java client for Kismet REST API.
+🌉 A Java client for Kismet REST API.
 
-Author : Mr Dk.
+Created by : Mr Dk.
 
 @2018.10 Nanjing, Jiangsu, China
 
@@ -50,8 +50,7 @@ public class Main {
         };
         
         listener.subscribe(TimeMessage.class);
-        listener.subscribe(MsgMessage.class);
-        listener.subscribe(WiFiAPMessage.class);
+        // subscribe more messages
         conn.register(listener);
         
         // conn.kill();
@@ -66,6 +65,11 @@ public class Main {
 * The operation to different types of message can be customized by instantiate different `JclientListener` and override method `onMessage` & `onTerminate`
 * Can be integrated into another Java project easily
 
+### Extension
+
+You can develop your own message types according to your need.
+
+View `doc/dev.md` to see how to develop a new message type with current framework.
+
 ---
 
-Developing to support more types of _message_
