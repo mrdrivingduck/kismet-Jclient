@@ -34,17 +34,17 @@ public class BSSIDMessage extends KismetMessage {
     private String cryptType;
     private long checksum;
 
-    private void addDeliminator(StringBuilder strBuilder, char del) {
+    private static void addDeliminator(StringBuilder strBuilder, char del) {
         if (strBuilder.length() > 0) {
             strBuilder.append(del);
         }
     }
 
-    private String cryptToString(int crypt_val) {
+    private static String cryptToString(int crypt_val) {
         StringBuilder strBuilder = new StringBuilder();
         
         if (crypt_val == CryptoType.crypt_none.value()) {
-            return new String("None");
+            return new String("");
         }
 
         if (crypt_val == CryptoType.crypt_unknown.value()) {
@@ -189,7 +189,7 @@ public class BSSIDMessage extends KismetMessage {
             Map<String, Object> inner_map = ssid_map.get(String.valueOf(checksum));
             if (inner_map.containsKey("dot11.advertisedssid.crypt_set")) {
                 int crypt_val = (int) inner_map.get("dot11.advertisedssid.crypt_set");
-                this.cryptType = cryptToString(crypt_val);
+                this.cryptType = BSSIDMessage.cryptToString(crypt_val);
             }
         }
     }
