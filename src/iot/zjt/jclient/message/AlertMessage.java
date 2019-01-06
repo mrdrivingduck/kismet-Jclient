@@ -15,7 +15,8 @@ public class AlertMessage extends KismetMessage {
     private String source;
     private String destination;
     private String bssid;
-    private Date time;
+    private Date firstTime;
+    private Date lastTime;
     private String header;
     private String text;
     private String channel;
@@ -40,8 +41,14 @@ public class AlertMessage extends KismetMessage {
 
     @FieldPath("kismet.alert.timestamp")
     @FieldAliase("kismet.alert.timestamp")
-    public void setTime(BigDecimal time) {
-        this.time = new Date(time.longValue());
+    public void setFirstTime(BigDecimal firstTime) {
+        this.firstTime = new Date(firstTime.longValue());
+    }
+
+    @FieldPath("kismet.alert.timestamp")
+    @FieldAliase("kismet.alert.timestamp")
+    public void setLastTime(BigDecimal lastTime) {
+        this.lastTime = new Date(lastTime.longValue());
     }
 
     @FieldPath("kismet.alert.header")
@@ -79,8 +86,12 @@ public class AlertMessage extends KismetMessage {
         return header;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getFirstTime() {
+        return firstTime;
+    }
+
+    public Date getLastTime() {
+        return lastTime;
     }
 
     public String getBssid() {
