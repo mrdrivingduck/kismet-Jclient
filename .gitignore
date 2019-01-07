@@ -3,3 +3,6 @@ bin/
 Test.java
 jclient.iml
 .idea/
+/target/
+.settings/
+.vertx/

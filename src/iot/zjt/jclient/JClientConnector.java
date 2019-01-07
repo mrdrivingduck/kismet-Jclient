@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import io.vertx.core.Vertx;
 import iot.zjt.jclient.message.AlertMessage;
 import iot.zjt.jclient.message.BSSIDMessage;
 import iot.zjt.jclient.message.ClientMessage;
@@ -29,10 +30,13 @@ import iot.zjt.jclient.util.UriGenerator;
 
 public class JClientConnector {
 
+    private static long timestamp = 0L;
+
     private final String host;
     private final int port;
 
     private boolean running;
+    private long timerID;
 
     private List<JClientListener> allListeners;
     private Set<Class<? extends KismetMessage>> allSubscriptions;
@@ -77,68 +81,16 @@ public class JClientConnector {
      * @param host
      * @param port
      */
-    public JClientConnector(String host, int port) {
+    public JClientConnector(String host, int port, final Vertx vertx, long period) {
         this.host = host;
         this.port = port;
         this.running = true;
         this.allListeners = new ArrayList<>();
         this.allSubscriptions = new HashSet<>();
 
-        new Thread() {
-        	
-        	@Override
-        	public void run() {
+        this.timerID = vertx.setPeriodic(period, handler -> {
 
-                long timestamp = 0L;
-
-                while (running) {
-
-                    if (allSubscriptions.contains(MsgMessage.class)) {
-                        try {
-                            generateMsgMessage(timestamp);
-                        } catch (IOException e) {
-                            printStackTrace();
-                        }
-                        
-                    }
-
-                    if (allSubscriptions.contains(BSSIDMessage.class)) {
-                        try {
-                            generateBSSIDMessage(timestamp);
-                        } catch (IOException e) {
-                            printStackTrace();
-                        }
-                    }
-
-                    if (allSubscriptions.contains(ClientMessage.class)) {
-                        try {
-                            generateClientMessage(timestamp);
-                        } catch (IOException e) {
-                            printStackTrace();
-                        }
-                    }
-
-                    if (allSubscriptions.contains(AlertMessage.class)) {
-                        try {
-                            generateAlertMessage(timestamp);
-                        } catch (IOException e) {
-                            printStackTrace();    
-                        }
-                    }
-        
-                    try {
-                        timestamp = generateTimeMessage();
-                    } catch (IOException e) {
-                        printStackTrace();
-                    }
-
-                    try {
-                        sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                
+            if (running == false) {
                 generateTerminateMessage();
 
                 try {
@@ -146,8 +98,51 @@ public class JClientConnector {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-        	}
-        }.start();
+
+                vertx.cancelTimer(this.timerID);
+                return;
+            }
+            
+            if (allSubscriptions.contains(MsgMessage.class)) {
+                try {
+                    generateMsgMessage(timestamp);
+                } catch (IOException e) {
+                    printStackTrace();
+                }
+                
+            }
+
+            if (allSubscriptions.contains(BSSIDMessage.class)) {
+                try {
+                    generateBSSIDMessage(timestamp);
+                } catch (IOException e) {
+                    printStackTrace();
+                }
+            }
+
+            if (allSubscriptions.contains(ClientMessage.class)) {
+                try {
+                    generateClientMessage(timestamp);
+                } catch (IOException e) {
+                    printStackTrace();
+                }
+            }
+
+            if (allSubscriptions.contains(AlertMessage.class)) {
+                try {
+                    generateAlertMessage(timestamp);
+                } catch (IOException e) {
+                    printStackTrace();    
+                }
+            }
+
+            try {
+                timestamp = generateTimeMessage();
+            } catch (IOException e) {
+                printStackTrace();
+            }
+        });
+
     }
 
     /**

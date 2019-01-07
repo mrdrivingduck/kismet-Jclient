@@ -1,5 +1,6 @@
 package iot.zjt.jclient;
 
+import io.vertx.core.Vertx;
 import iot.zjt.jclient.message.AlertMessage;
 import iot.zjt.jclient.message.BSSIDMessage;
 import iot.zjt.jclient.message.ClientMessage;
@@ -11,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		JClientConnector conn = new JClientConnector("192.168.25.129", 2501);
+		JClientConnector conn = new JClientConnector("192.168.2.105", 2501, Vertx.vertx(), 3000);
 
 		JClientListener listener = new JClientListener(){
 		
