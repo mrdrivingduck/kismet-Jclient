@@ -13,31 +13,67 @@ import org.apache.commons.csv.CSVRecord;
  * Used for getting manufactor from MAC address.
  * Data from : https://standards.ieee.org/products-services/regauth/index.html#
  * @author Mr Dk.
- * @version 2018.11.23
+ * @version 2019.1.10
  */
 
 public class VendorUtil {
 
     private static final VendorUtil instance = new VendorUtil();
-    private Map<String, String> vendorMap = new HashMap<>(26000);
 
-    private final String OUI_PATH = "data/oui.csv";
+    /**
+     * key - MAC address block
+     * value - Organization name
+     */
+    private Map<String, String> largeBlock = new HashMap<>(26000);
+    private Map<String, String> mediumBlock = new HashMap<>(2500);
+    private Map<String, String> smallBlock = new HashMap<>(3200);
+
+    /**
+     * CSV file path
+     */
+    private final String LARGE_BLOCK_PATH = "data/oui.csv";
+    private final String MEDIUM_BLOCK_PATH = "data/mam.csv";
+    private final String SMALL_BLOCK_PATH = "data/oui36.csv";
+
+    /**
+     * Index of columns in CSV file
+     * [1] - MAC address block
+     * [2] - Organization name
+     */
     private final int INDEX_MAC = 1;
     private final int INDEX_ORG = 2;
 
     private VendorUtil() {
         try {
-            Reader in = new FileReader(OUI_PATH);
-            Iterable<CSVRecord> records = CSVFormat
-                .RFC4180
-                .parse(in);
+            Reader in = new FileReader(LARGE_BLOCK_PATH);
+            Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
             for (CSVRecord record : records) {
                 String mac = record.get(INDEX_MAC);
                 String organization = record.get(INDEX_ORG);
-                vendorMap.put(mac, organization);
+                largeBlock.put(mac, organization);
             }
+            in.close();
+
+            in = new FileReader(MEDIUM_BLOCK_PATH);
+            records = CSVFormat.RFC4180.parse(in);
+            for (CSVRecord record : records) {
+                String mac = record.get(INDEX_MAC);
+                String organization = record.get(INDEX_ORG);
+                mediumBlock.put(mac, organization);
+            }
+            in.close();
+
+            in = new FileReader(SMALL_BLOCK_PATH);
+            records = CSVFormat.RFC4180.parse(in);
+            for (CSVRecord record : records) {
+                String mac = record.get(INDEX_MAC);
+                String organization = record.get(INDEX_ORG);
+                smallBlock.put(mac, organization);
+            }
+            in.close();
+
         } catch(IOException e) {
-            System.err.println("Failed to load " + OUI_PATH);
+            System.err.println("Failed to load CSV files");
         }
     }
 
@@ -56,10 +92,32 @@ public class VendorUtil {
             return "";
         }
 
-        StringBuilder key = new StringBuilder(splits[0])
-            .append(splits[1])
-            .append(splits[2]);
-        return vendorMap.containsKey(key.toString()) ?
-            vendorMap.get(key.toString()) : "";
+        StringBuilder key = new StringBuilder();
+        for (String split : splits) {
+            key.append(split);
+        }
+
+        /**
+         * Small block address : 36-bit (9-bit in HEX)
+         */
+        if (smallBlock.containsKey(key.toString().substring(0, 9))) {
+            return smallBlock.get(key.toString().substring(0, 9));
+        }
+
+        /**
+         * Medium block address : 28-bit (7-bit in HEX)
+         */
+        if (mediumBlock.containsKey(key.toString().substring(0, 7))) {
+            return mediumBlock.get(key.toString().substring(0, 7));
+        }
+
+        /**
+         * Small block address : 24-bit (6-bit in HEX)
+         */
+        if (largeBlock.containsKey(key.toString().substring(0, 6))) {
+            return largeBlock.get(key.toString().substring(0, 6));
+        }
+
+        return "";
     }
 }
