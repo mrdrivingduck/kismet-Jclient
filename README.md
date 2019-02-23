@@ -1,5 +1,5 @@
 # kismet-Jclient
-🌉 A Java client for Kismet REST API.
+🌉 A Java client for Kismet RESTful API.
 
 Created by : Mr Dk.
 
@@ -9,11 +9,11 @@ Created by : Mr Dk.
 
 ### About
 
-A Java client to get information from _Kismet Server_ by Kismet's _REST API_
+A Java client to get information from _Kismet Server_ by Kismet's RESTful API
 
 ### Environment
 
-* _Kismet_ release `2018-08-beta1` - Supporting _REST API_
+* _Kismet_ release `2018-08-beta1` - Supporting RESTful API
 * `JDK` & `JRE` - Versions above 1.8
 
 ### Dependency
