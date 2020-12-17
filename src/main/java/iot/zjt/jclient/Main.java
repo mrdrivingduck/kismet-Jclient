@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		JClientConnector conn = new JClientConnector("192.168.2.105", 2501, Vertx.vertx(), 3000);
+		JClientConnector conn = new JClientConnector("192.168.2.106", 2501, Vertx.vertx(), 3000);
 
 		JClientListener listener = new JClientListener(){
 		

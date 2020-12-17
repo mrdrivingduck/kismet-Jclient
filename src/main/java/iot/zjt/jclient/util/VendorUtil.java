@@ -1,8 +1,6 @@
 package iot.zjt.jclient.util;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,9 +29,9 @@ public class VendorUtil {
     /**
      * CSV file path
      */
-    private final String LARGE_BLOCK_PATH = "data/oui.csv";
-    private final String MEDIUM_BLOCK_PATH = "data/mam.csv";
-    private final String SMALL_BLOCK_PATH = "data/oui36.csv";
+    private final String LARGE_BLOCK_PATH = "/oui.csv";
+    private final String MEDIUM_BLOCK_PATH = "/mam.csv";
+    private final String SMALL_BLOCK_PATH = "/oui36.csv";
 
     /**
      * Index of columns in CSV file
@@ -45,7 +43,7 @@ public class VendorUtil {
 
     private VendorUtil() {
         try {
-            Reader in = new FileReader(LARGE_BLOCK_PATH);
+            Reader in = new InputStreamReader(this.getClass().getResourceAsStream(LARGE_BLOCK_PATH));
             Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
             for (CSVRecord record : records) {
                 String mac = record.get(INDEX_MAC);
@@ -54,7 +52,7 @@ public class VendorUtil {
             }
             in.close();
 
-            in = new FileReader(MEDIUM_BLOCK_PATH);
+            in = new InputStreamReader(this.getClass().getResourceAsStream(MEDIUM_BLOCK_PATH));
             records = CSVFormat.RFC4180.parse(in);
             for (CSVRecord record : records) {
                 String mac = record.get(INDEX_MAC);
@@ -63,7 +61,7 @@ public class VendorUtil {
             }
             in.close();
 
-            in = new FileReader(SMALL_BLOCK_PATH);
+            in = new InputStreamReader(this.getClass().getResourceAsStream(SMALL_BLOCK_PATH));
             records = CSVFormat.RFC4180.parse(in);
             for (CSVRecord record : records) {
                 String mac = record.get(INDEX_MAC);
