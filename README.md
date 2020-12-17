@@ -10,24 +10,24 @@ Created by : Mr Dk.
 
 ## About
 
-A Java client to get information from _Kismet Server_ by Kismet's RESTful API
+A Java client to get information from *Kismet* server by *Kismet*'s RESTful API
 
 ## Environment
 
-* _Kismet_ release `2018-08-beta1` - Supporting RESTful API
-* `JDK` & `JRE` - Versions above 1.8
+* *Kismet* release `2018-08-beta1` - Supporting RESTful API
+* Java 8
 
 ## Dependency
 
-* `HttpClient 4.5` - A part of _Apache HttpComponents&trade;_ - [link](http://hc.apache.org/)
+* `HttpClient` - A part of *Apache HttpComponents&trade;* - [link](http://hc.apache.org/)
 * `fastjson` - A fast JSON parser/generator for Java - [link](https://github.com/alibaba/fastjson/wiki)
-* `Commons-csv` - A CSV parser of _Apache Commons CSV&trade;_ - [link](https://commons.apache.org/proper/commons-csv/)
+* `Commons-csv` - A CSV parser of *Apache Commons CSV&trade;* - [link](https://commons.apache.org/proper/commons-csv/)
 
 ## Usage
 
-1. Instantiation a `JClientConnector` with `host` & `port` on which _Kismet httpd service_ is running
-2. Instantiation a `JClientListener` and override methods `onMessage` & `onTerminate`
-3. Subscribe specific _message types_ for `JClientListener`
+1. Instantiation a `JClientConnector` with `host` & `port` on which **Kismet httpd service** is running
+2. Instantiation a `JClientListener` and override methods `onMessage()` & `onTerminate()`
+3. Subscribe specific message types for `JClientListener`
 4. Register the `JClientListener` onto the `JClientConnector`
 
 ```java
@@ -66,9 +66,7 @@ public class Main {
 
 ## Extension
 
-You can develop your own message types according to your need.
-
-View `doc/dev.md` to see how to develop a new message type with current framework.
+You can develop your own message types according to your need. View `doc/dev.md` to see how to develop a new message type with current framework.
 
 ## License
 
