@@ -308,7 +308,7 @@ public class BSSIDMessage extends KismetMessage {
 
     @Override
     public String toString() {
-        return "BSSIDMessage: {" + "mac:" + mac + ", ssid:" + ssid + ", crypt:" + cryptType + "}";
+        return "BSSIDMessage: {" + "mac:" + mac + ", ssid:" + ssid + ", crypt:" + cryptType + ", manufacturer: " + manufacturer + "}";
     }
 
     public String getCryptType() {
