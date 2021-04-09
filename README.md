@@ -1,4 +1,4 @@
-# kismet-Jclient
+# kismet-Jclient (ARCHIVED: no longer maintained!)
 
 🌉 A Java client for Kismet RESTful API.
 
